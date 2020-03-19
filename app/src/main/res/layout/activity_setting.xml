@@ -79,7 +79,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:onClick="Get"
-            android:text="Retrieve"
+            android:text="View All Data"
+            android:padding="5dp"
             android:layout_margin="10dp"
             android:background="@android:color/holo_orange_light"
             tools:ignore="HardcodedText,OnClick"
@@ -95,7 +96,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:onClick="clear"
-            android:text="Clear"
+            android:text="Delete"
             android:layout_margin="10dp"
             android:background="@android:color/holo_orange_light"
             android:textColor="#fff"
@@ -109,15 +110,44 @@
         android:orientation="vertical"
         android:layout_marginTop="20dp">
 
+        <View
+            android:layout_width="150dp"
+            android:layout_height="5dp"
+            android:background="@android:color/holo_orange_light"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"/>
+
         <TextView
-            android:id="@+id/nameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
-            android:textSize="20sp"
-            android:padding="10dp"
+            android:text="Set time interval to scan results "
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginVertical="50dp"
             />
 
+      <EditText
+          android:id="@+id/delayEdittext"
+          android:layout_width="250dp"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:inputType="number"
+          android:hint="Enter time Interval"
+          android:padding="10dp"
+          />
+        <Button
+            android:id="@+id/delayBtn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="10dp"
+            android:text="Set"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:onClick="setTimeInterval"
+            android:background="@android:color/holo_orange_light"
+            tools:ignore="OnClick" />
     </LinearLayout>
 
 </LinearLayout>
