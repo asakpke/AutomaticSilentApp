@@ -50,22 +50,32 @@ public class MainActivity extends AppCompatActivity{
     ListAdapter listAdapter;
     ListView wifiList;
     List myWifiList;
-
-//    TextView toolbarText;
-
     NotificationManager mnotificationManager;
-
     DatabaseHelper myDb;
+    IntervalDatabaseHelper intervaldb;
+
+    int intervalTime;
 
     @SuppressLint("WifiManagerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        startService(new Intent(this, MyService.class));
         setContentView(R.layout.activity_main);
         myDb=new DatabaseHelper(this);
         wifiList =(ListView) findViewById(R.id.list);
 
-//        toolbarText =findViewById(R.id.toolbarText);
+        intervaldb =new IntervalDatabaseHelper(this);
+
+        if (intervaldb.intervalData().getCount() == 0)
+        {
+            intervaldb.intervalinsertData(10);
+            Toast.makeText(this, "yeh to hoga", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "kuch ni", Toast.LENGTH_SHORT).show();
+        }
 
         wifiManager =(WifiManager) getSystemService(Context.WIFI_SERVICE);
         wifiReciever = new WifiReciever();
@@ -76,40 +86,17 @@ public class MainActivity extends AppCompatActivity{
 
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},0);
         }
-        else
-        {
+        else {
             ScanWifiList();
+            Toast.makeText(this, "wifilist", Toast.LENGTH_SHORT).show();
         }
-
-//        view();
-
    }
 
-//   public void view()
-//   {
-//
-//       Cursor res=myDb.getAllData();
-//       if (res.getCount()==0){
-//
-//           Toast.makeText(this, "nothing found", Toast.LENGTH_SHORT).show();
-//           return;
-//
-//       }
-//
-//       StringBuffer buffer = new StringBuffer();
-//       while(res.moveToNext())
-//       {
-////           buffer.append("ID :"+res.getString(0)+"\n\n");
-////           buffer.append("Name :"+res.getString(1)+"\n\n");
-//
-//           toolbarText.setText(res.getString(1));
-//
-//       }
-//
-//       Toast.makeText(this, "Data", Toast.LENGTH_SHORT).show();
-//   }
-
     private void ScanWifiList() {
+
+        Cursor result =intervaldb.intervalData();
+        result.moveToNext();
+        intervalTime = result.getInt(0);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -120,7 +107,7 @@ public class MainActivity extends AppCompatActivity{
                 setAdapter();
 
             }
-        }, 5*1000);
+        }, intervalTime*1000);
 
         mnotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -129,18 +116,10 @@ public class MainActivity extends AppCompatActivity{
 
             Toast.makeText(this, "nothing found", Toast.LENGTH_SHORT).show();
             return;
-
         }
-
-        StringBuffer buffer = new StringBuffer();
         while(res.moveToNext())
         {
-           buffer.append("ID :"+res.getString(0)+"\n\n");
-           buffer.append("Name :"+res.getString(1)+"\n\n");
-
-//            toolbarText.setText(res.getString(1));
-
-            if (res.getString(1).contains("AndroidWifi") && String.valueOf(myWifiList).contains("AndroidWifi"))
+            if (String.valueOf(myWifiList).contains(res.getString(1).toString()))
             {
                 changeInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE);
             }
@@ -150,27 +129,8 @@ public class MainActivity extends AppCompatActivity{
             }
 
         }
-        showMessage("Data",buffer.toString());
-
-//        if (String.valueOf(myWifiList).contains("AndroidWifi"))
-//        if (res.getString(1).contains("AndroidWifi"))
-//        {
-//            changeInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE);
-//        }
-//        else
-//        {
-//            changeInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL);
-//        }
     }
 
-    public void showMessage(String title,String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-
-    }
     protected void changeInterruptionFilter(int interruptionFilter){
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){ // If api level minimum 23
 
@@ -194,11 +154,9 @@ public class MainActivity extends AppCompatActivity{
 
     public void setting(View view) {
 
-        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this,Setting.class);
         startActivity(intent);
     }
-
 
     class WifiReciever extends BroadcastReceiver
    {
