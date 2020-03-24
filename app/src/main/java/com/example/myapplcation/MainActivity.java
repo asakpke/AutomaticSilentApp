@@ -21,10 +21,13 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.provider.Settings;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity{
     NotificationManager mnotificationManager;
     DatabaseHelper myDb;
     IntervalDatabaseHelper intervaldb;
+    ImageView settingBtn;
 
     int intervalTime;
 
@@ -62,19 +66,33 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         startService(new Intent(this, MyService.class));
         setContentView(R.layout.activity_main);
-        myDb=new DatabaseHelper(this);
-        wifiList =(ListView) findViewById(R.id.list);
 
+        wifiList =(ListView) findViewById(R.id.list);
+        settingBtn =findViewById(R.id.settings);
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast toast = Toast.makeText(MainActivity.this, "hello bhai chal ja", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
+        });
+
+        myDb=new DatabaseHelper(this);
         intervaldb =new IntervalDatabaseHelper(this);
 
-        if (intervaldb.intervalData().getCount() == 0)
+        if (myDb.getAllData().getCount() == 0)
+        {
+            myDb.insertData("Keep Quiet");
+        }
+        else if (intervaldb.intervalData().getCount() == 0)
         {
             intervaldb.intervalinsertData(10);
-            Toast.makeText(this, "yeh to hoga", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Values Inserted", Toast.LENGTH_SHORT).show();
         }
         else
         {
-            Toast.makeText(this, "kuch ni", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Values Not Inserted", Toast.LENGTH_SHORT).show();
         }
 
         wifiManager =(WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -114,7 +132,7 @@ public class MainActivity extends AppCompatActivity{
         Cursor res=myDb.getAllData();
         if (res.getCount()==0){
 
-            Toast.makeText(this, "nothing found", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "nothing found", Toast.LENGTH_SHORT).show();
             return;
         }
         while(res.moveToNext())
@@ -151,12 +169,13 @@ public class MainActivity extends AppCompatActivity{
         listAdapter = new com.example.myapplcation.ListAdapter(getApplicationContext(),myWifiList);
         wifiList.setAdapter(listAdapter);
     }
-
-    public void setting(View view) {
-
-        Intent intent = new Intent(this,Setting.class);
-        startActivity(intent);
-    }
+//
+//    public void setting(View view) {
+//
+////        Intent intent = new Intent(this,Setting.class);
+////        startActivity(intent);
+//        Toast.makeText(this, "setting ok", Toast.LENGTH_SHORT).show();
+//    }
 
     class WifiReciever extends BroadcastReceiver
    {
