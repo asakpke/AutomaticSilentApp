@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity{
     List myWifiList;
     NotificationManager mnotificationManager;
     DatabaseHelper myDb;
-    IntervalDatabaseHelper intervaldb;
+//    IntervalDatabaseHelper intervaldb;
     ImageView settingBtn;
 
     int intervalTime;
@@ -72,27 +72,27 @@ public class MainActivity extends AppCompatActivity{
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(MainActivity.this, "hello bhai chal ja", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
+//                Toast toast = Toast.makeText(MainActivity.this, "hello bhai chal ja", Toast.LENGTH_SHORT);
+//                toast.setGravity(Gravity.CENTER, 0, 0);
+//                toast.show();
+                Intent i=new Intent(MainActivity.this,Setting.class);
+                startActivity(i);
             }
         });
 
         myDb=new DatabaseHelper(this);
-        intervaldb =new IntervalDatabaseHelper(this);
+//        intervaldb =new IntervalDatabaseHelper(this);
 
-        if (myDb.getAllData().getCount() == 0)
+        if (myDb.getAllData().getCount() == 0 && myDb.intervalData().getCount() == 0)
         {
-            myDb.insertData("Keep Quiet");
-        }
-        else if (intervaldb.intervalData().getCount() == 0)
-        {
-            intervaldb.intervalinsertData(10);
-            Toast.makeText(this, "Values Inserted", Toast.LENGTH_SHORT).show();
+            myDb.insertData("PTCL-WIFI-BB");
+            myDb.intervalinsertData(10);
+            Toast.makeText(this, "inserted", Toast.LENGTH_SHORT).show();
+
         }
         else
         {
-            Toast.makeText(this, "Values Not Inserted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No Values Inserted", Toast.LENGTH_SHORT).show();
         }
 
         wifiManager =(WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -112,9 +112,9 @@ public class MainActivity extends AppCompatActivity{
 
     private void ScanWifiList() {
 
-        Cursor result =intervaldb.intervalData();
+        Cursor result =myDb.intervalData();
         result.moveToNext();
-        intervalTime = result.getInt(0);
+        intervalTime = result.getInt(1);
 
         new Handler().postDelayed(new Runnable() {
             @Override
