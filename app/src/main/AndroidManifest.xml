@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.myapplcation">
+    package="com.sheikhsalar.automatic_silent_app">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -19,14 +19,14 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <service
-            android:name=".MyService"
+            android:name="com.sheikhsalar.automatic_silent_app.MyService"
             android:enabled="true"
             android:exported="true"></service>
 
         <activity
-            android:name=".Setting"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".MainActivity">
+            android:name="com.sheikhsalar.automatic_silent_app.Setting"
+            android:parentActivityName="com.sheikhsalar.automatic_silent_app.MainActivity" />
+        <activity android:name="com.sheikhsalar.automatic_silent_app.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

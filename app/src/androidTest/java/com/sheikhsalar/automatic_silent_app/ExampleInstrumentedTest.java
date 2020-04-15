@@ -1,4 +1,4 @@
-package com.example.myapplcation;
+package com.sheikhsalar.automatic_silent_app;
 
 import android.content.Context;
 
