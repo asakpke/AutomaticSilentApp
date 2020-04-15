@@ -1,25 +1,18 @@
-package com.example.myapplcation;
+package com.sheikhsalar.automatic_silent_app;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import static com.example.myapplcation.DatabaseHelper.COL_2;
 
 public class Setting extends AppCompatActivity {
 
@@ -98,19 +91,19 @@ public class Setting extends AppCompatActivity {
             }
         });
 
-        Cursor res=myDb.intervalData();
-        if (res.getCount()==0){
-            showMessage("Error","Nothing Found");
-            return;
-
-        }
-
-        StringBuffer buffer = new StringBuffer();
-        while(res.moveToNext())
-        {
-            buffer.append("Interval :"+res.getString(1)+"\n\n");
-        }
-        showMessage("Data",buffer.toString());
+//        Cursor res=myDb.intervalData();
+//        if (res.getCount()==0){
+//            showMessage("Error","Nothing Found");
+//            return;
+//
+//        }
+//
+//        StringBuffer buffer = new StringBuffer();
+//        while(res.moveToNext())
+//        {
+//            buffer.append("Interval :"+res.getString(1)+"\n\n");
+//        }
+//        showMessage("Data",buffer.toString());
     }
 
     public void Save(View view) {

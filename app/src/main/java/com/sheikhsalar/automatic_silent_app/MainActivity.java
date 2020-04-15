@@ -1,49 +1,30 @@
 
-package com.example.myapplcation;
+package com.sheikhsalar.automatic_silent_app;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.NotificationManager;
-import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.media.AudioManager;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.provider.Settings;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
@@ -166,7 +147,7 @@ public class MainActivity extends AppCompatActivity{
         }
     }
     private void setAdapter(){
-        listAdapter = new com.example.myapplcation.ListAdapter(getApplicationContext(),myWifiList);
+        listAdapter = new com.sheikhsalar.automatic_silent_app.ListAdapter(getApplicationContext(),myWifiList);
         wifiList.setAdapter(listAdapter);
     }
 //
