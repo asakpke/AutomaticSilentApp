@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -27,26 +28,64 @@ public class Setting extends AppCompatActivity {
     ImageButton backButton;
     EditText idEdittext;
     DatabaseHelper myDb;
-    IntervalDatabaseHelper intervaldb;
+//    IntervalDatabaseHelper intervaldb;
+    Button timeSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        myDb=new DatabaseHelper(this);
-        intervaldb =new IntervalDatabaseHelper(this);
+        timeSet = findViewById(R.id.delayBtn);
+        timeSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        Cursor data=myDb.getAllData();
-        if (data.getCount() == 0)
-        {
-            myDb.insertData("AndroidWifi");
-            Toast.makeText(this, "inserted data", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(this, "not inserted", Toast.LENGTH_SHORT).show();
-        }
+                if (delayEditText.getText().toString().length() > 0){
+
+                    int value =Integer.parseInt(delayEditText.getText().toString());
+                    if(value > 2) {
+                        Toast.makeText(getApplicationContext(), "Enter a value between 0 and 2!", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(value < 0) {
+                        Toast.makeText(getApplicationContext(), "Enter a value between 0 and 10!", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(value >= 0 && value <= 2)
+                    {
+                        myDb.updateIntervalData(value);
+                    }
+
+                }
+                else
+                {
+                    Toast.makeText(Setting.this, "Enter values", Toast.LENGTH_SHORT).show();
+                }
+                boolean isUpdate = myDb.updateIntervalData(Integer.parseInt(delayEditText.getText().toString()));
+
+                if (isUpdate)
+                {
+                    Toast.makeText(Setting.this, "Time interval Updated", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(Setting.this, "time inetrval not updated", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        myDb=new DatabaseHelper(this);
+//        intervaldb =new IntervalDatabaseHelper(this);
+
+//        Cursor data=myDb.getAllData();
+//        if (data.getCount() == 0)
+//        {
+//            myDb.insertData("AndroidWifi");
+//            Toast.makeText(this, "inserted data", Toast.LENGTH_SHORT).show();
+//        }
+//        else
+//        {
+//            Toast.makeText(this, "not inserted", Toast.LENGTH_SHORT).show();
+//        }
 
         idEdittext = findViewById(R.id.idEditText);
         wifiName = (EditText) findViewById(R.id.etWifi);
@@ -59,7 +98,7 @@ public class Setting extends AppCompatActivity {
             }
         });
 
-        Cursor res=intervaldb.intervalData();
+        Cursor res=myDb.intervalData();
         if (res.getCount()==0){
             showMessage("Error","Nothing Found");
             return;
@@ -69,7 +108,7 @@ public class Setting extends AppCompatActivity {
         StringBuffer buffer = new StringBuffer();
         while(res.moveToNext())
         {
-            buffer.append("Interval :"+res.getString(0)+"\n\n");
+            buffer.append("Interval :"+res.getString(1)+"\n\n");
         }
         showMessage("Data",buffer.toString());
     }
@@ -84,7 +123,11 @@ public class Setting extends AppCompatActivity {
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
 
-        } else
+        }
+        else if(w.equals("")){
+            Toast.makeText(this, "Please enter values", Toast.LENGTH_SHORT).show();
+        }
+        else
         {
             Toast.makeText(this, "Data is not inserted", Toast.LENGTH_SHORT).show();
         }
@@ -138,37 +181,4 @@ public class Setting extends AppCompatActivity {
           }
     }
 
-    public void setTimeInterval(View view) {
-
-//        int res = Integer.parseInt(delayEditText.getText().toString());
-//        boolean isInserted=intervaldb.intervalinsertData(res);
-//
-//        if (isInserted)
-//        {
-//            Toast toast = Toast.makeText(Setting.this,"Your Interval Time is Set", Toast.LENGTH_LONG);
-//            toast.setGravity(Gravity.CENTER, 0, 0);
-//            toast.show();
-//        }else if (res == 0)
-//        {
-//            Toast.makeText(this, "Not set! Enter the time interval", Toast.LENGTH_SHORT).show();
-//            delayEditText.setError("This field is required");
-//        }
-
-        if (delayEditText.toString().isEmpty())
-        {
-            Toast.makeText(this, "Please enter Interval Time", Toast.LENGTH_SHORT).show();
-        }
-
-        else if (intervaldb.intervalData().getCount() == 0){
-            intervaldb.intervalinsertData(10);
-            Toast.makeText(this, "Time Interval Set", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            int delayTime =Integer.parseInt(delayEditText.toString());
-            intervaldb.updateIntervalData(delayTime);
-        }
-
-
-    }
 }

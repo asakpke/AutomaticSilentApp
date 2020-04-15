@@ -31,7 +31,13 @@
         />
 
     </androidx.appcompat.widget.Toolbar>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
     <EditText
         android:id="@+id/etWifi"
         android:layout_width="match_parent"
@@ -149,5 +155,6 @@
             android:background="@android:color/holo_orange_light"
             tools:ignore="OnClick" />
     </LinearLayout>
-
+        </LinearLayout>
+</ScrollView>
 </LinearLayout>
