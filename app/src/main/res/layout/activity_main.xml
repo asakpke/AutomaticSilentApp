@@ -16,7 +16,7 @@
             android:id="@+id/toolbarText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wifi Scanning App"
+            android:text="Automatic Silent App"
             android:textColor="#ffffff"
             android:textSize="26sp"
             />
@@ -33,7 +33,7 @@
         android:id="@+id/txtDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Android Wifi Networks"
+        android:text="Wifi Networks"
         android:textSize="30sp"
         android:textColor="@color/colorPrimary"
         android:textAlignment="center"
