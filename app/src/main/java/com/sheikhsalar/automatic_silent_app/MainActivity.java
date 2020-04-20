@@ -15,12 +15,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity{
     DatabaseHelper myDb;
 //    IntervalDatabaseHelper intervaldb;
     ImageView settingBtn;
+    ImageView aboutBtn;
 
     int intervalTime;
 
@@ -50,6 +54,16 @@ public class MainActivity extends AppCompatActivity{
 
         wifiList =(ListView) findViewById(R.id.list);
         settingBtn =findViewById(R.id.settings);
+        aboutBtn =findViewById(R.id.aboutMenu);
+
+        aboutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity.this,AboutActivity.class);
+                startActivity(intent);
+            }
+        });
+
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,8 +80,8 @@ public class MainActivity extends AppCompatActivity{
 
         if (myDb.getAllData().getCount() == 0 && myDb.intervalData().getCount() == 0)
         {
-            myDb.insertData("PTCL-WIFI-BB");
-            myDb.intervalinsertData(10);
+            myDb.insertData("keepquiet");
+            myDb.intervalinsertData("10");
             Toast.makeText(this, "inserted", Toast.LENGTH_SHORT).show();
 
         }
@@ -91,11 +105,12 @@ public class MainActivity extends AppCompatActivity{
         }
    }
 
+
     private void ScanWifiList() {
 
         Cursor result =myDb.intervalData();
         result.moveToNext();
-        intervalTime = result.getInt(1);
+        intervalTime = Integer.parseInt(result.getString(1));
 
         new Handler().postDelayed(new Runnable() {
             @Override

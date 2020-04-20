@@ -29,43 +29,6 @@ public class Setting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        timeSet = findViewById(R.id.delayBtn);
-        timeSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (delayEditText.getText().toString().length() > 0){
-
-                    int value =Integer.parseInt(delayEditText.getText().toString());
-                    if(value > 2) {
-                        Toast.makeText(getApplicationContext(), "Enter a value between 0 and 2!", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(value < 0) {
-                        Toast.makeText(getApplicationContext(), "Enter a value between 0 and 10!", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(value >= 0 && value <= 2)
-                    {
-                        myDb.updateIntervalData(value);
-                    }
-
-                }
-                else
-                {
-                    Toast.makeText(Setting.this, "Enter values", Toast.LENGTH_SHORT).show();
-                }
-                boolean isUpdate = myDb.updateIntervalData(Integer.parseInt(delayEditText.getText().toString()));
-
-                if (isUpdate)
-                {
-                    Toast.makeText(Setting.this, "Time interval Updated", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Toast.makeText(Setting.this, "time inetrval not updated", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
         myDb=new DatabaseHelper(this);
 //        intervaldb =new IntervalDatabaseHelper(this);
 
@@ -83,6 +46,24 @@ public class Setting extends AppCompatActivity {
         idEdittext = findViewById(R.id.idEditText);
         wifiName = (EditText) findViewById(R.id.etWifi);
         delayEditText = (EditText) findViewById(R.id.delayEdittext);
+        timeSet = findViewById(R.id.delayBtn);
+        timeSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String t = delayEditText.getText().toString();
+                boolean isInserted=myDb.intervalinsertData(t);
+
+                if(t.equals("")){
+                    Toast.makeText(Setting.this, "Please enter values", Toast.LENGTH_SHORT).show();
+                }else  if (isInserted){
+                    Toast toast = Toast.makeText(Setting.this,"Your Time Interval is Set", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+
+                }
+
+            }
+        });
         backButton =findViewById(R.id.backBtn);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,19 +72,19 @@ public class Setting extends AppCompatActivity {
             }
         });
 
-//        Cursor res=myDb.intervalData();
-//        if (res.getCount()==0){
-//            showMessage("Error","Nothing Found");
-//            return;
-//
-//        }
-//
-//        StringBuffer buffer = new StringBuffer();
-//        while(res.moveToNext())
-//        {
-//            buffer.append("Interval :"+res.getString(1)+"\n\n");
-//        }
-//        showMessage("Data",buffer.toString());
+        Cursor res=myDb.intervalData();
+        if (res.getCount()==0){
+            showMessage("Error","Nothing Found");
+            return;
+
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        while(res.moveToNext())
+        {
+            buffer.append("Interval :"+res.getString(1)+"\n\n");
+        }
+        showMessage("Data",buffer.toString());
     }
 
     public void Save(View view) {
@@ -111,25 +92,15 @@ public class Setting extends AppCompatActivity {
         String w = wifiName.getText().toString();
         boolean isInserted=myDb.insertData(w);
 
-        if (isInserted){
+        if(w.equals("")){
+            Toast.makeText(this, "Please enter values", Toast.LENGTH_SHORT).show();
+        }else  if (isInserted){
             Toast toast = Toast.makeText(Setting.this,"Your Wifi Name is Set", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
 
         }
-        else if(w.equals("")){
-            Toast.makeText(this, "Please enter values", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(this, "Data is not inserted", Toast.LENGTH_SHORT).show();
-        }
-        InputMethodManager inputManager = (InputMethodManager)
-                getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
-        }
+    }
 
 
     public void Get(View view) {

@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT)");
-        db.execSQL("create table " + TABLE_NAME2 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,INTERVAL INT)");
+        db.execSQL("create table " + TABLE_NAME2 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,INTERVAL TEXT)");
 
     }
 
@@ -56,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-    public boolean intervalinsertData(int interval){
+    public boolean intervalinsertData(String interval){
 
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues2=new ContentValues();
@@ -86,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return intervalResult;
     }
 
-    public boolean updateIntervalData(int interval){
+    public boolean updateIntervalData(String interval){
 
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues2=new ContentValues();
