@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="Q"/>
 
     <application
         android:allowBackup="true"
