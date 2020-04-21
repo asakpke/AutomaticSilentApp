@@ -19,6 +19,9 @@ View the records of wifi names we have set.
 Delete the name by giving ID.
 App will run always in background so user dont have to open it every time
 
+How to install apk file:
+The latest apk file is given in root with named "app-debug.apk",You can download the file on your mobile and install it by clicking the file. 
+
 Thankyou
 RoshanTech
 
