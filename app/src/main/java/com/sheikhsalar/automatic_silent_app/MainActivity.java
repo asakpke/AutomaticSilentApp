@@ -15,15 +15,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -38,6 +43,11 @@ public class MainActivity extends AppCompatActivity{
     ListView wifiList;
     List myWifiList;
     NotificationManager mnotificationManager;
+    EditText wifiName;
+    EditText delayEditText;
+    ImageButton backButton;
+    EditText idEdittext;
+    Button timeSet;
     DatabaseHelper myDb;
 //    IntervalDatabaseHelper intervaldb;
     ImageView settingBtn;
@@ -52,8 +62,29 @@ public class MainActivity extends AppCompatActivity{
         startService(new Intent(this, MyService.class));
         setContentView(R.layout.activity_main);
 
-        wifiList =(ListView) findViewById(R.id.list);
-        settingBtn =findViewById(R.id.settings);
+//        wifiList =(ListView) findViewById(R.id.list);
+//        settingBtn =findViewById(R.id.settings);
+        idEdittext = findViewById(R.id.idEditText);
+        wifiName = (EditText) findViewById(R.id.etWifi);
+        delayEditText = (EditText) findViewById(R.id.delayEdittext);
+        timeSet = findViewById(R.id.delayBtn);
+        timeSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String t = delayEditText.getText().toString();
+                boolean isInserted=myDb.intervalinsertData(t);
+
+                if(t.equals("")){
+                    Toast.makeText(MainActivity.this, "Please enter values", Toast.LENGTH_SHORT).show();
+                }else  if (isInserted){
+                    Toast toast = Toast.makeText(MainActivity.this,"Your Time Interval is Set", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+
+                }
+
+            }
+        });
         aboutBtn =findViewById(R.id.aboutMenu);
 
         aboutBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,16 +95,16 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        settingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast toast = Toast.makeText(MainActivity.this, "hello bhai chal ja", Toast.LENGTH_SHORT);
-//                toast.setGravity(Gravity.CENTER, 0, 0);
-//                toast.show();
-                Intent i=new Intent(MainActivity.this,Setting.class);
-                startActivity(i);
-            }
-        });
+//        settingBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Toast toast = Toast.makeText(MainActivity.this, "hello bhai chal ja", Toast.LENGTH_SHORT);
+////                toast.setGravity(Gravity.CENTER, 0, 0);
+////                toast.show();
+//                Intent i=new Intent(MainActivity.this,Setting.class);
+//                startActivity(i);
+//            }
+//        });
 
         myDb=new DatabaseHelper(this);
 //        intervaldb =new IntervalDatabaseHelper(this);
@@ -82,12 +113,12 @@ public class MainActivity extends AppCompatActivity{
         {
             myDb.insertData("keepquiet");
             myDb.intervalinsertData("10");
-            Toast.makeText(this, "inserted", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "inserted", Toast.LENGTH_SHORT).show();
 
         }
         else
         {
-            Toast.makeText(this, "No Values Inserted", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "No Values Inserted", Toast.LENGTH_SHORT).show();
         }
 
         wifiManager =(WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -101,7 +132,7 @@ public class MainActivity extends AppCompatActivity{
         }
         else {
             ScanWifiList();
-            Toast.makeText(this, "wifilist", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "wifilist", Toast.LENGTH_SHORT).show();
         }
    }
 
@@ -118,7 +149,7 @@ public class MainActivity extends AppCompatActivity{
                 wifiManager.startScan();
                 ScanWifiList();
                 myWifiList = wifiManager.getScanResults();
-                setAdapter();
+//                setAdapter();
 
             }
         }, intervalTime*1000);
@@ -159,6 +190,60 @@ public class MainActivity extends AppCompatActivity{
                 Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
                 startActivity(intent);
             }
+        }
+    }
+    public void Save(View view) {
+
+        String w = wifiName.getText().toString();
+        boolean isInserted=myDb.insertData(w);
+
+        if(w.equals("")){
+            Toast.makeText(this, "Please enter values", Toast.LENGTH_SHORT).show();
+        }else  if (isInserted){
+            Toast toast = Toast.makeText(MainActivity.this,"Your Wifi Name is Set", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+
+        }
+    }
+    public void Get(View view) {
+
+        Cursor res=myDb.getAllData();
+        if (res.getCount()==0)
+        {
+            showMessage("Error","Nothing Found");
+            return;
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        while(res.moveToNext())
+        {
+            buffer.append("ID :"+res.getString(0)+"\n\n");
+            buffer.append("Name :"+res.getString(1)+"\n\n");
+        }
+        showMessage("Data",buffer.toString());
+    }
+    public void showMessage(String title,String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
+    }
+
+    public void clear(View view) {
+
+        Integer deletedRows=  myDb.deleteData(idEdittext.getText().toString());
+        if (deletedRows > 0)
+        {
+            Toast.makeText(this, "Data Deleted", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "Data Not Deleted", Toast.LENGTH_SHORT).show();
+            idEdittext.setError("Please Enter Id to Delete Data");
+            idEdittext.findFocus();
         }
     }
     private void setAdapter(){

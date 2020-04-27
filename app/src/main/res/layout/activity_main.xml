@@ -20,19 +20,13 @@
             android:textColor="#ffffff"
             android:textSize="22sp"
             />
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_settings"
-            android:layout_marginStart="40dp"
-            tools:ignore="RtlCompat" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/aboutMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_about_us"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="40dp"
             tools:ignore="RtlCompat" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -47,9 +41,137 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal" />
 
-    <ListView
-        android:id="@+id/list"
+<!--    <ListView-->
+<!--        android:id="@+id/list"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="fill_parent"-->
+<!--        android:layout_margin="20dp"></ListView>-->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="20dp"></ListView>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+            <EditText
+                android:id="@+id/etWifi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter the Wifi Name"
+                android:inputType="text"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:padding="10dp"/>
+
+            <EditText
+                android:id="@+id/idEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter id you want to delete"
+                android:padding="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:onClick="Save"
+                    android:text="Save"
+                    android:layout_margin="10dp"
+                    android:background="@android:color/holo_orange_light"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    tools:ignore="OnClick" />
+
+                <Button
+                    android:id="@+id/btnRetr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="Get"
+                    android:text="View All Data"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:background="@android:color/holo_orange_light"
+                    tools:ignore="HardcodedText,OnClick"
+                    android:textColor="#fff"
+                    android:textStyle="bold"/>
+
+
+                <Button
+                    android:id="@+id/btnClear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:onClick="clear"
+                    android:text="Delete"
+                    android:layout_margin="10dp"
+                    android:background="@android:color/holo_orange_light"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    tools:ignore="OnClick" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+                <View
+                    android:layout_width="150dp"
+                    android:layout_height="5dp"
+                    android:background="@android:color/holo_orange_light"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Set time interval to scan results "
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="50dp"
+                    />
+
+                <EditText
+                    android:id="@+id/delayEdittext"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:inputType="number"
+                    android:hint="Enter time Interval"
+                    android:padding="10dp"
+                    />
+                <Button
+                    android:id="@+id/delayBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="10dp"
+                    android:text="Set"
+                    android:textStyle="bold"
+                    android:textColor="#fff"
+                    android:onClick="setTimeInterval"
+                    android:background="@android:color/holo_orange_light"
+                    tools:ignore="OnClick" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
