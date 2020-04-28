@@ -29,6 +29,13 @@ public class Setting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+
+//        View view=this.getCurrentFocus();
+//        if (view!=null){
+//            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//            im.hideSoftInputFromWindow(view.getWindowToken(),0);
+//        }
+
         myDb=new DatabaseHelper(this);
 //        intervaldb =new IntervalDatabaseHelper(this);
 
@@ -51,7 +58,7 @@ public class Setting extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String t = delayEditText.getText().toString();
-                boolean isInserted=myDb.intervalinsertData(t);
+                boolean isInserted=myDb.updateIntervalData(t);
 
                 if(t.equals("")){
                     Toast.makeText(Setting.this, "Please enter values", Toast.LENGTH_SHORT).show();
@@ -100,6 +107,7 @@ public class Setting extends AppCompatActivity {
             toast.show();
 
         }
+
     }
 
 

@@ -29,7 +29,7 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId){
 
         // do your jobs here
-        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
 
         startForeground();
 
