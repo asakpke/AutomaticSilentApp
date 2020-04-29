@@ -21,7 +21,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="0123456789ABCDEF" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -246,7 +245,21 @@
       <option name="project" value="LOCAL" />
       <updated>1587993154136</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="apk file">
+      <created>1587993525886</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1587993525886</updated>
+    </task>
+    <task id="LOCAL-00015" summary="keep quiet changed">
+      <created>1588081349286</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1588081349286</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -268,13 +281,14 @@
     <MESSAGE value="Update Intervaltime When Already value is set" />
     <MESSAGE value="Some Changes to I have done in MainActivity to add default value of wifi name" />
     <MESSAGE value="fixes issue in android timeinterval and create table for time interval" />
-    <MESSAGE value="apk file" />
     <MESSAGE value="change package name and removed popup showing" />
     <MESSAGE value="layout changes and new apk added" />
     <MESSAGE value="background app running resolved and app crash on adding timeinterval" />
     <MESSAGE value="apk file added" />
     <MESSAGE value="new apk file added" />
     <MESSAGE value="setting activity data converted to main actvity" />
-    <option name="LAST_COMMIT_MESSAGE" value="setting activity data converted to main actvity" />
+    <MESSAGE value="apk file" />
+    <MESSAGE value="keep quiet changed" />
+    <option name="LAST_COMMIT_MESSAGE" value="keep quiet changed" />
   </component>
 </project>

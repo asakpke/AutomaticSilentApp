@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity{
 
         if (myDb.getAllData().getCount() == 0 && myDb.intervalData().getCount() == 0)
         {
-            myDb.insertData("keepquiet");
+            myDb.insertData("keep quiet");
             myDb.intervalinsertData("10");
 //            Toast.makeText(this, "inserted", Toast.LENGTH_SHORT).show();
 
