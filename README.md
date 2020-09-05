@@ -25,3 +25,5 @@ The latest apk file is given in root with named "app-debug.apk",You can download
 Thankyou
 RoshanTech
 
+[Become a patron](https://patreon.com/asakpke)
+
